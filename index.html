@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cozéa Café — Cafe operations | Vigan City</title>
-    <meta name="description" content="Cozéa Café's local cafe operations dashboard for menu management, orders, sales, and backups.">
+    <title>Cozéa Café — Admin dashboard | Vigan City</title>
+    <meta name="description" content="Cozéa Café's local admin dashboard for daily sales, orders, and menu management.">
     <meta name="theme-color" content="#243a32">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600;700;800&display=swap');
@@ -220,8 +220,110 @@
             margin-bottom: 26px
         }
         
+        .dashboard-metrics {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(280px, .8fr);
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+        
+        .dashboard-card {
+            background: #fff;
+            box-shadow: var(--shadow);
+            min-width: 0;
+        }
+        
+        .sales-chart {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            align-items: end;
+            gap: 12px;
+            min-height: 220px;
+            padding: 20px 27px 25px;
+        }
+        
+        .sales-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: end;
+            gap: 8px;
+            height: 175px;
+            min-width: 0;
+            color: var(--muted);
+            font-size: 11px;
+        }
+        
+        .sales-day strong {
+            max-width: 100%;
+            overflow: hidden;
+            color: var(--ink);
+            font-size: 10px;
+            text-overflow: ellipsis;
+        }
+        
+        .sales-bar-wrap {
+            display: flex;
+            align-items: end;
+            width: min(100%, 42px);
+            height: 125px;
+            background: #f1f4ef;
+        }
+        
+        .sales-bar {
+            width: 100%;
+            min-height: 3px;
+            background: var(--teal);
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .sales-day.is-today .sales-bar {
+            background: var(--coral);
+        }
+        
+        .popular-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0 24px 12px;
+        }
+        
+        .popular-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 13px 0;
+            border-top: 1px solid var(--line);
+            font-size: 13px;
+        }
+        
+        .popular-item span {
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        
+        .dashboard-quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .dashboard-recent .card-heading {
+            align-items: center;
+        }
+        
+        .dashboard-empty {
+            padding: 20px 27px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+        
         .purchase-metrics {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             margin-bottom: 26px
         }
         
@@ -424,8 +526,7 @@
             padding: 29px
         }
         
-        .tip-label,
-        .storage-number {
+        .tip-label {
             color: #9ed4c6;
             font: 11px 'DM Mono', monospace;
             text-transform: uppercase
@@ -458,131 +559,6 @@
         
         .management-table {
             overflow: hidden
-        }
-        
-        .storage-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px
-        }
-        
-        .storage-card {
-            background: #fff;
-            padding: 30px;
-            min-height: 250px;
-            box-shadow: var(--shadow);
-            border-top: 3px solid var(--teal)
-        }
-        
-        .storage-card:nth-child(2) {
-            border-color: var(--coral)
-        }
-        
-        .storage-card h2 {
-            font-size: 23px;
-            margin: 35px 0 8px
-        }
-        
-        .storage-card p {
-            color: var(--muted);
-            font-size: 13px;
-            max-width: 380px;
-            margin-bottom: 25px
-        }
-        
-        .file-button {
-            display: inline-block
-        }
-        
-        .storage-card input[type=file] {
-            display: none
-        }
-        
-        .storage-note {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            padding: 18px 0;
-            color: var(--muted);
-            font-size: 12px
-        }
-        
-        .storage-note strong {
-            color: var(--ink)
-        }
-        
-        .danger-link {
-            margin-left: auto;
-            color: var(--coral)
-        }
-        
-        .admin-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 10;
-            display: grid;
-            place-items: center;
-            padding: 20px;
-            background: rgba(24, 38, 45, .72)
-        }
-        
-        .admin-modal[hidden] {
-            display: none
-        }
-        
-        .admin-dialog {
-            position: relative;
-            width: min(100%, 410px);
-            padding: 30px;
-            background: #fff;
-            box-shadow: 0 24px 70px rgba(0, 0, 0, .25)
-        }
-        
-        .admin-dialog h2 {
-            margin-bottom: 7px;
-            font-size: 25px
-        }
-        
-        .admin-dialog p {
-            color: var(--muted);
-            font-size: 13px
-        }
-        
-        .admin-dialog label {
-            margin-top: 25px
-        }
-        
-        .admin-dialog input {
-            width: 100%;
-            border: 1px solid var(--line);
-            padding: 12px 13px;
-            outline: 0
-        }
-        
-        .admin-dialog input:focus {
-            border-color: var(--teal)
-        }
-        
-        .admin-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 20px
-        }
-        
-        .admin-close {
-            position: absolute;
-            top: 16px;
-            right: 18px;
-            border: 0;
-            background: transparent;
-            color: var(--muted);
-            font-size: 24px
-        }
-        
-        .admin-message {
-            min-height: 20px;
-            margin: 12px 0 0 !important;
-            color: var(--coral) !important
         }
         
         .pos-card {
@@ -880,11 +856,19 @@
                 margin-top: 22px
             }
             .metrics,
-            .storage-grid,
             .manage-grid,
             .pos-card,
             .menu-grid {
                 grid-template-columns: 1fr
+            }
+            .dashboard-metrics,
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .sales-chart {
+                gap: 6px;
+                padding-right: 15px;
+                padding-left: 15px;
             }
             .pos-form {
                 grid-template-columns: 1fr 100px
@@ -908,16 +892,6 @@
             }
             .table-card {
                 overflow: hidden
-            }
-            .storage-note {
-                display: block
-            }
-            .storage-note>* {
-                display: block;
-                margin: 8px 0
-            }
-            .danger-link {
-                margin-top: 18px
             }
             footer {
                 padding-left: 20px;
@@ -1049,7 +1023,6 @@
         .metric,
         .table-card,
         .form-card,
-        .storage-card,
         .menu-card,
         .cart-panel,
         .pos-card {
@@ -1089,7 +1062,6 @@
         
         input[type=text],
         input[type=number],
-        .admin-dialog input,
         .menu-toolbar select {
             border-radius: 7px;
         }
@@ -1112,14 +1084,6 @@
             border-top: 3px solid var(--teal);
         }
         
-        .storage-card {
-            border-top-width: 3px;
-        }
-        
-        .admin-dialog {
-            border-radius: 12px;
-        }
-        
         footer {
             border-top: 1px solid var(--line);
             color: #738078;
@@ -1128,12 +1092,130 @@
             letter-spacing: .03em;
         }
         
+        .admin-toggle {
+            flex: 0 0 auto;
+            border: 1px solid rgba(255, 255, 255, .28);
+            border-radius: 8px;
+            padding: 9px 14px;
+            background: rgba(255, 255, 255, .1);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .admin-toggle:hover {
+            background: rgba(255, 255, 255, .18);
+        }
+        
+        .admin-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: grid;
+            place-items: center;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(24, 38, 45, .72);
+        }
+        
+        .admin-modal[hidden] {
+            display: none;
+        }
+        
+        .admin-dialog {
+            position: relative;
+            width: min(100%, 420px);
+            padding: 30px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .25);
+        }
+        
+        .admin-dialog h2 {
+            margin-bottom: 7px;
+            font-size: 25px;
+        }
+        
+        .admin-dialog>p:not(.eyebrow):not(.admin-message) {
+            color: var(--muted);
+            font-size: 13px;
+        }
+        
+        .admin-dialog label {
+            display: block;
+            margin: 22px 0 7px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        
+        .admin-dialog input {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 12px 13px;
+        }
+        
+        .admin-message {
+            min-height: 1.5em;
+            margin: 8px 0 0;
+            color: #a33b35;
+            font-size: 13px;
+        }
+        
+        .admin-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .menu-backup-actions {
+            padding: 0 27px 20px;
+        }
+        
+        .admin-close {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 24px;
+        }
+        
+        @media (max-width: 960px) {
+            .dashboard-metrics {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .dashboard-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .menu-layout {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .cart-panel {
+                position: static;
+            }
+            .manage-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .navbar {
+                flex-wrap: wrap;
+            }
+            .nav-button {
+                flex: 1 1 150px;
+            }
+        }
+        
         @media (max-width: 700px) {
             .header-inner {
                 padding: 18px 20px;
+                gap: 12px;
             }
             .brand {
                 font-size: 15px;
+                min-width: 0;
             }
             .brand-logo {
                 width: 46px;
@@ -1143,13 +1225,16 @@
             .navbar {
                 gap: 2px;
                 scrollbar-width: thin;
+                padding: 0 16px;
             }
             .nav-button {
-                min-width: 130px;
-                border-radius: 7px 7px 0 0;
+                min-width: 0;
+                flex: 1 1 calc(50% - 4px);
+                padding: 11px 9px;
+                border-radius: 7px;
             }
             .page-shell {
-                padding-top: 34px;
+                padding: 30px 16px 54px;
             }
             .page-heading>.button,
             .page-heading .form-actions .button {
@@ -1158,6 +1243,41 @@
             .page-heading .form-actions {
                 flex-direction: column;
             }
+            .dashboard-metrics,
+            .dashboard-grid,
+            .metrics,
+            .manage-grid,
+            .pos-card,
+            .menu-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+            .dashboard-quick-actions {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 10px;
+                margin-top: 20px;
+            }
+            .pos-form {
+                grid-template-columns: minmax(0, 1fr) 90px;
+            }
+            .pos-form .button {
+                grid-column: 1 / -1;
+            }
+            .card-heading {
+                gap: 12px;
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .menu-backup-actions {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+            th,
+            td {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
             .cart-panel {
                 position: static;
             }
@@ -1165,6 +1285,11 @@
                 flex-direction: column;
                 gap: 6px;
                 line-height: 1.5;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+            .admin-dialog {
+                padding: 26px 20px 22px;
             }
         }
         
@@ -1186,11 +1311,12 @@
         <div class="header-inner">
             <a class="brand" href="index.html">
                 <img class="brand-logo" src="cozea.jpg" alt="Cozéa Café logo">
-                <span>COZÉA CAFÉ | Vigan City<small>Counter &amp; menu</small></span></a>
+                <span>COZÉA CAFÉ | Vigan City<small>Cafe admin</small></span></a>
             <div class="header-note"><span class="status-dot"></span> Vigan City · Local workspace</div>
+            <button class="admin-toggle" id="admin-toggle" type="button" aria-haspopup="dialog">Admin login</button>
         </div>
-        <nav class="navbar" aria-label="Main navigation"><button class="nav-button" type="button" data-tab="home">Dashboard <span>Today's service</span></button><button class="nav-button is-active" type="button" data-tab="menu" aria-current="page">Cafe menu <span>Drinks &amp; bites</span></button>
-            <button class="nav-button" type="button" data-tab="purchases">Sales <span>Order history</span></button><button class="nav-button" type="button" data-tab="manage">Menu setup</button><button class="nav-button" type="button" data-tab="storage">Backup <span>Import / export</span></button></nav>
+        <nav class="navbar" aria-label="Main navigation"><button class="nav-button is-active" type="button" data-tab="home" aria-current="page">Dashboard <span>Today at a glance</span></button><button class="nav-button" type="button" data-tab="menu">Take an order <span>Drinks &amp; bites</span></button>
+            <button class="nav-button" type="button" data-tab="purchases" data-admin-only hidden>Orders &amp; sales</button><button class="nav-button" type="button" data-tab="manage" data-admin-only hidden>Menu management</button></nav>
     </header>
     <main class="page-shell">
         <section class="tab-panel is-active" data-panel="home">
@@ -1198,54 +1324,76 @@
                 <div>
                     <p class="eyebrow">COZÉA CAFÉ / <span id="today"></span></p>
                     <h1>Good day. Ready to serve?</h1>
-                    <p class="lede">Your counter, menu, and sales at a glance.</p>
-                </div><button class="button button-primary" type="button" data-tab="menu">Browse cafe menu</button></div>
-            <div class="metrics">
-                <article class="metric"><span>Menu items</span><strong id="item-count">0</strong></article>
-                <article class="metric"><span>Orders completed</span><strong id="dashboard-order-count">0</strong></article>
-                <article class="metric metric-accent"><span>Sales recorded</span><strong id="dashboard-sales-total">₱0.00</strong></article>
+                    <p class="lede">A live view of today’s service, sales, and best sellers.</p>
+                </div>
+                <div class="dashboard-quick-actions">
+                    <button class="button button-primary" type="button" data-tab="menu">＋ Take an order</button>
+                    <button class="button button-secondary" type="button" data-tab="manage" data-admin-only hidden>＋ Add menu item</button>
+                </div>
+            </div>
+            <div class="metrics dashboard-metrics">
+                <article class="metric"><span>Orders today</span><strong id="dashboard-orders-today">0</strong><small>Completed orders</small></article>
+                <article class="metric metric-accent"><span>Sales today</span><strong id="dashboard-sales-today">₱0.00</strong><small>From completed orders</small></article>
+                <article class="metric"><span>Average order</span><strong id="dashboard-average-order">₱0.00</strong><small>Today's sales per order</small></article>
+                <article class="metric"><span>Menu items</span><strong id="dashboard-menu-count">0</strong><small>Currently listed</small></article>
+            </div>
+            <div class="dashboard-grid">
+                <section class="dashboard-card" aria-labelledby="sales-chart-title">
+                    <div class="card-heading">
+                        <div>
+                            <h2 id="sales-chart-title">Sales overview</h2>
+                            <p>Daily sales for the last seven days</p>
+                        </div><span class="record-count">PHP</span></div>
+                    <div class="sales-chart" id="sales-chart" aria-label="Sales by day for the last seven days"></div>
+                </section>
+                <section class="dashboard-card" aria-labelledby="popular-items-title">
+                    <div class="card-heading">
+                        <div>
+                            <h2 id="popular-items-title">Popular items</h2>
+                            <p>Best sellers by quantity, all time</p>
+                        </div>
+                    </div>
+                    <div class="popular-list" id="popular-items"></div>
+                </section>
             </div>
             <section class="pos-card" aria-labelledby="pos-title">
                 <div>
                     <div class="card-heading" style="padding:0 0 18px">
                         <div>
-                            <h2 id="pos-title">Take an order</h2>
-                            <p>Choose a menu item, set the quantity, and send it through.</p>
+                            <h2 id="pos-title">Quick counter sale</h2>
+                            <p>Record a single-item counter order without leaving the dashboard.</p>
                         </div>
                     </div>
                     <form class="pos-form" id="pos-form">
                         <div class="pos-field"><label for="pos-item">Menu item</label><select id="pos-item" required><option value="">Choose a drink or bite</option></select></div>
                         <div class="pos-field"><label for="pos-quantity">Qty</label><input id="pos-quantity" type="number" min="1" step="1" value="1" required></div>
-                        <button class="button button-primary" type="submit">Complete order</button>
+                        <button class="button button-primary" type="submit">Record sale</button>
                         <p class="pos-message" id="pos-message" role="status"></p>
                     </form>
                 </div>
                 <div class="pos-availability"><span class="order-total">Order total</span><strong id="pos-total">₱0.00</strong></div>
             </section>
-            <div class="table-card">
+            <div class="table-card dashboard-recent">
                 <div class="card-heading">
                     <div>
-                        <h2>Cafe menu</h2>
-                        <p>Menu items and prices currently offered.</p>
-                    </div><span class="record-count" id="record-count">0 records</span></div>
+                        <h2>Recent orders</h2>
+                        <p>Latest completed orders across the counter and menu.</p>
+                    </div><button class="button button-secondary" type="button" data-tab="purchases" data-admin-only hidden>View all orders</button></div>
                 <div class="table-wrap">
                     <table>
                         <thead>
                             <tr>
-                                <th>Item</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Last updated</th>
-                                <th>Actions</th>
+                                <th>Time</th>
+                                <th>Order</th>
+                                <th>Items</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
-                        <tbody id="inventory-table"></tbody>
+                        <tbody id="dashboard-recent-orders"></tbody>
                     </table>
                 </div>
-                <div class="empty-state" id="empty-state">
-                    <div class="empty-icon">+</div>
-                    <h3>Your menu is waiting</h3>
-                    <p>Add your first cafe item to start taking orders.</p><button class="button button-secondary" type="button" data-tab="manage">Add a menu item</button></div>
+                <p class="dashboard-empty" id="dashboard-orders-empty" hidden>No orders have been recorded yet. Start by taking an order from the menu.</p>
             </div>
         </section>
         <section class="tab-panel" data-panel="menu" hidden>
@@ -1254,7 +1402,7 @@
                     <p class="eyebrow">COZÉA CAFÉ / <span>Made with care</span></p>
                     <h1>Something good is brewing.</h1>
                     <p class="lede">Explore today's drinks and little treats. Build a quick order and finish it at the counter.</p>
-                </div><button class="button button-primary" type="button" data-tab="manage">+ Add menu item</button>
+                </div><button class="button button-primary" type="button" data-tab="manage" data-admin-only hidden>+ Add menu item</button>
             </div>
             <div class="menu-layout">
                 <div>
@@ -1284,8 +1432,8 @@
             <div class="page-heading">
                 <div>
                     <p class="eyebrow">Cozea Cafe / <span>Order book</span></p>
-                    <h1>Sales &amp; orders</h1>
-                    <p class="lede">Every completed order, kept close at hand.</p>
+                    <h1>Orders &amp; sales</h1>
+                    <p class="lede">Review completed transactions and track sales performance.</p>
                 </div>
                 <div class="form-actions">
                     <button class="button button-primary" type="button" id="export-order-history-button">Save order history</button>
@@ -1301,8 +1449,8 @@
             <div class="table-card">
                 <div class="card-heading">
                     <div>
-                        <h2>Today's order book</h2>
-                        <p>Completed orders and their totals.</p>
+                        <h2>Order history</h2>
+                        <p>Completed order items, quantities, and totals.</p>
                     </div><span class="record-count" id="purchase-record-count">0 records</span></div>
                 <div class="table-wrap">
                     <table>
@@ -1349,8 +1497,23 @@
                 </form>
                 <aside class="tip-card"><span class="tip-label">Quick note</span>
                     <h2>Good coffee. Good records.</h2>
-                    <p>Your menu and order history stay in this browser. Save a backup from the storage tab.</p><button class="text-link" type="button" data-tab="storage">Open backup tools <span>-></span></button></aside>
+                    <p>Your menu and order history are saved automatically in this browser. Add, edit, or remove items from the menu here.</p>
+                </aside>
             </div>
+            <section class="table-card" aria-labelledby="menu-backup-title">
+                <div class="card-heading">
+                    <div>
+                        <h2 id="menu-backup-title">Menu backup</h2>
+                        <p>Save a portable .txt backup or restore menu items from a previous backup.</p>
+                    </div>
+                </div>
+                <div class="form-actions menu-backup-actions">
+                    <button class="button button-primary" id="export-menu-button" type="button">Save menu as .txt</button>
+                    <button class="button button-secondary" id="import-menu-button" type="button">Import menu .txt</button>
+                    <input id="import-menu-file" type="file" accept=".txt,text/plain,application/json" hidden>
+                </div>
+                <p class="form-message" id="menu-backup-message" role="status" aria-live="polite"></p>
+            </section>
             <div class="table-card management-table">
                 <div class="card-heading">
                     <div>
@@ -1374,56 +1537,42 @@
                 </div>
             </div>
         </section>
-        <section class="tab-panel" data-panel="storage" hidden>
-            <div class="page-heading">
-                <div>
-                    <p class="eyebrow">Cozea Cafe / <span>Keep it safe</span></p>
-                    <h1>Backup your cafe data</h1>
-                    <p class="lede">Take your menu and prices with you in a simple text file.</p>
-                </div>
-            </div>
-            <div class="storage-grid">
-                <article class="storage-card"><span class="storage-number">01</span>
-                    <h2>Export cafe menu</h2>
-                    <p>Download menu items and prices as a readable <strong>.txt</strong> file.</p><button class="button button-primary" type="button" id="export-button">Download cafe backup</button></article>
-                <article class="storage-card"><span class="storage-number">02</span>
-                    <h2>Import cafe menu</h2>
-                    <p>Load a previously exported file. Imported records replace the current menu.</p><label class="button button-secondary file-button" for="import-file">Choose .txt file</label><input id="import-file" type="file" accept=".txt,text/plain">
-                    <p class="form-message" id="storage-message" role="status"></p>
-                </article>
-            </div>
-            <div class="storage-note"><strong>Local-first storage</strong><span id="storage-summary">0 records currently saved in this browser.</span><button class="text-link danger-link" type="button" id="clear-button">Clear all menu items</button></div>
-        </section>
     </main>
     <div class="admin-modal" id="admin-modal" hidden>
-        <form class="admin-dialog" id="admin-form">
-            <button class="admin-close" id="admin-close" type="button" aria-label="Close admin password dialog">x</button>
-            <p class="eyebrow">Local demo access</p>
-            <h2>Admin access required</h2>
-            <p>This browser-only demo does not provide secure authentication. Use a server-backed sign-in before storing real sales data.</p>
+        <form class="admin-dialog" id="admin-form" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+            <button class="admin-close" id="admin-close" type="button" aria-label="Close admin login">×</button>
+            <p class="eyebrow">Restricted area</p>
+            <h2 id="admin-title">Admin access required</h2>
+            <p>Log in to view orders and sales or manage the café menu.</p>
             <label for="admin-password">Admin password</label>
             <input id="admin-password" type="password" autocomplete="current-password" required>
             <p class="admin-message" id="admin-message" role="alert"></p>
-            <div class="admin-actions"><button class="button button-primary" type="submit">Unlock</button><button class="button button-quiet" id="admin-cancel" type="button">Cancel</button></div>
+            <div class="admin-actions">
+                <button class="button button-primary" type="submit">Log in</button>
+                <button class="button button-quiet" id="admin-cancel" type="button">Cancel</button>
+            </div>
         </form>
     </div>
-    <footer><span>Cozea Cafe · Counter &amp; menu</span><span>Local browser data · No cloud sync</span></footer>
+    <footer><span>Cozea Cafe · Cafe operations</span><span>Data saved in this browser</span></footer>
     <script>
         (() => {
-            const storageKey = 'admin';
+            const menuStorageKey = 'admin';
             const purchaseStorageKey = 'steel-asia-purchases';
-            const adminPassword = 'admin123';
             const cartStorageKey = 'cafe-cart';
+            const adminPassword = 'admin123';
+            const adminSessionKey = 'steel-asia-admin';
+            const menuBackupFormat = 'cozea-menu';
             let inventory = readInventory();
             let purchases = readPurchases();
             let cart = readCart();
+            let isAdminLoggedIn = sessionStorage.getItem(adminSessionKey) === 'unlocked';
             let pendingAdminAction = null;
             const $ = (selector) => document.querySelector(selector);
             const $$ = (selector) => [...document.querySelectorAll(selector)];
 
             function readInventory() {
                 try {
-                    const saved = localStorage.getItem(storageKey);
+                    const saved = localStorage.getItem(menuStorageKey);
                     if (saved === null) {
                         const now = new Date().toISOString();
                         const starterMenu = [{
@@ -1463,7 +1612,7 @@
                             price: 120,
                             updatedAt: now
                         }];
-                        localStorage.setItem(storageKey, JSON.stringify(starterMenu));
+                        localStorage.setItem(menuStorageKey, JSON.stringify(starterMenu));
                         return starterMenu;
                     }
                     const items = JSON.parse(saved);
@@ -1472,7 +1621,7 @@
                         quantity,
                         ...item
                     }) => item);
-                    localStorage.setItem(storageKey, JSON.stringify(menuItems));
+                    localStorage.setItem(menuStorageKey, JSON.stringify(menuItems));
                     return menuItems;
                 } catch (error) {
                     console.error('Unable to read or initialize cafe inventory.', error);
@@ -1501,17 +1650,102 @@
             }
 
             function saveInventory() {
-                localStorage.setItem(storageKey, JSON.stringify(inventory));
+                localStorage.setItem(menuStorageKey, JSON.stringify(inventory));
                 render();
             }
 
             function savePurchases() {
                 localStorage.setItem(purchaseStorageKey, JSON.stringify(purchases));
+                render();
             }
 
             function saveCart() {
                 sessionStorage.setItem(cartStorageKey, JSON.stringify(cart));
                 renderCart();
+            }
+
+            function validateMenuBackup(data) {
+                const items = Array.isArray(data) ? data :
+                    data && data.format === menuBackupFormat && data.version === 1 ? data.items : null;
+                if (!Array.isArray(items)) {
+                    throw new Error('This file is not a supported Cozéa menu backup.');
+                }
+
+                const ids = new Set();
+                return items.map((item, index) => {
+                    if (!item || typeof item !== 'object' || Array.isArray(item)) {
+                        throw new Error(`Menu item ${index + 1} is not valid.`);
+                    }
+                    const id = typeof item.id === 'string' ? item.id.trim() : '';
+                    const name = typeof item.name === 'string' ? item.name.trim() : '';
+                    const category = item.category === undefined ? '' : item.category;
+                    const price = item.price;
+                    if (!id || ids.has(id) || !name || typeof category !== 'string' ||
+                        typeof price !== 'number' || !Number.isFinite(price) || price < 0) {
+                        throw new Error(`Menu item ${index + 1} has missing or invalid details.`);
+                    }
+                    ids.add(id);
+                    return {
+                        id,
+                        name,
+                        category: category.trim(),
+                        price,
+                        updatedAt: typeof item.updatedAt === 'string' && item.updatedAt
+                            ? item.updatedAt
+                            : new Date().toISOString()
+                    };
+                });
+            }
+
+            function downloadMenuBackup() {
+                const message = $('#menu-backup-message');
+                try {
+                    const backup = {
+                        format: menuBackupFormat,
+                        version: 1,
+                        exportedAt: new Date().toISOString(),
+                        items: inventory.map(({ id, name, category, price, updatedAt }) => ({
+                            id,
+                            name,
+                            category: category || '',
+                            price: itemPrice({ price }),
+                            updatedAt: updatedAt || ''
+                        }))
+                    };
+                    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'text/plain;charset=utf-8' });
+                    const downloadUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = 'cozea-cafe-menu.txt';
+                    document.body.appendChild(link);
+                    link.click();
+                    link.remove();
+                    window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+                    message.textContent = `Menu backup saved with ${inventory.length} item${inventory.length === 1 ? '' : 's'}.`;
+                } catch (error) {
+                    console.error('Unable to save the cafe menu backup.', error);
+                    message.textContent = 'Could not save the menu backup. Please try again.';
+                }
+            }
+
+            async function importMenuBackup(file) {
+                const message = $('#menu-backup-message');
+                try {
+                    const data = JSON.parse(await file.text());
+                    const imported = validateMenuBackup(data);
+                    if (!window.confirm(`Replace the current menu with ${imported.length} item${imported.length === 1 ? '' : 's'} from this backup?`)) {
+                        return;
+                    }
+                    localStorage.setItem(menuStorageKey, JSON.stringify(imported));
+                    inventory = imported;
+                    render();
+                    message.textContent = `Menu restored with ${imported.length} item${imported.length === 1 ? '' : 's'}.`;
+                } catch (error) {
+                    console.error('Unable to import the cafe menu backup.', error);
+                    message.textContent = error instanceof SyntaxError
+                        ? 'Could not read this file. Choose a valid Cozéa menu .txt backup.'
+                        : error.message || 'Could not import the menu backup. Please try again.';
+                }
             }
 
             function formatDate(value) {
@@ -1527,6 +1761,43 @@
                     style: 'currency',
                     currency: 'PHP'
                 }).format(Number(value) || 0);
+            }
+
+            function purchaseTotal(purchase) {
+                const unitPrice = Number(purchase.unitPrice !== undefined ? purchase.unitPrice : purchase.price) || 0;
+                return Number(purchase.total) || unitPrice * Number(purchase.quantity || 0);
+            }
+
+            function groupPurchases(records) {
+                const grouped = new Map();
+                records.forEach((purchase, index) => {
+                    const key = purchase.orderId || purchase.id || `legacy-${index}`;
+                    if (!grouped.has(key)) {
+                        grouped.set(key, {
+                            id: key,
+                            items: [],
+                            total: 0,
+                            quantity: 0,
+                            purchasedAt: purchase.purchasedAt
+                        });
+                    }
+                    const order = grouped.get(key);
+                    order.items.push(purchase);
+                    order.total += purchaseTotal(purchase);
+                    order.quantity += Number(purchase.quantity) || 0;
+                    if (new Date(purchase.purchasedAt) > new Date(order.purchasedAt)) {
+                        order.purchasedAt = purchase.purchasedAt;
+                    }
+                });
+                return [...grouped.values()].sort((a, b) => new Date(b.purchasedAt) - new Date(a.purchasedAt));
+            }
+
+            function isToday(value) {
+                const date = new Date(value);
+                const today = new Date();
+                return date.getFullYear() === today.getFullYear() &&
+                    date.getMonth() === today.getMonth() &&
+                    date.getDate() === today.getDate();
             }
 
             function itemPrice(item) {
@@ -1609,20 +1880,84 @@
                     `).join('') : '<div class="empty-state menu-empty"><h3>No menu items in this category</h3><p>Add a cafe favourite in Menu setup.</p></div>';
             }
 
-            function render() {
-                if ($('#item-count')) $('#item-count').textContent = inventory.length;
-                if ($('#record-count')) $('#record-count').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'}`;
-                if ($('#storage-summary')) $('#storage-summary').textContent = `${inventory.length} menu item${inventory.length === 1 ? '' : 's'} currently saved in this browser.`;
+            function renderDashboard() {
+                const orders = groupPurchases(purchases);
+                const todayPurchases = purchases.filter((purchase) => isToday(purchase.purchasedAt));
+                const todayOrders = groupPurchases(todayPurchases);
+                const todaySales = todayPurchases.reduce((sum, purchase) => sum + purchaseTotal(purchase), 0);
 
+                $('#dashboard-orders-today').textContent = todayOrders.length;
+                $('#dashboard-sales-today').textContent = formatCurrency(todaySales);
+                $('#dashboard-average-order').textContent = formatCurrency(todayOrders.length ? todaySales / todayOrders.length : 0);
+                $('#dashboard-menu-count').textContent = inventory.length;
+
+                const days = [];
+                for (let offset = 6; offset >= 0; offset -= 1) {
+                    const date = new Date();
+                    date.setHours(0, 0, 0, 0);
+                    date.setDate(date.getDate() - offset);
+                    const sales = purchases
+                        .filter((purchase) => {
+                            const purchasedAt = new Date(purchase.purchasedAt);
+                            return purchasedAt.getFullYear() === date.getFullYear() &&
+                                purchasedAt.getMonth() === date.getMonth() &&
+                                purchasedAt.getDate() === date.getDate();
+                        })
+                        .reduce((sum, purchase) => sum + purchaseTotal(purchase), 0);
+                    days.push({
+                        date,
+                        sales
+                    });
+                }
+                const maxSales = Math.max(...days.map((day) => day.sales), 0);
+                $('#sales-chart').innerHTML = days.map(({
+                    date,
+                    sales
+                }) => {
+                    const height = maxSales ? Math.max(4, sales / maxSales * 100) : 3;
+                    const dayLabel = new Intl.DateTimeFormat('en', {
+                        weekday: 'short'
+                    }).format(date);
+                    return `<div class="sales-day${isToday(date) ? ' is-today' : ''}" title="${date.toLocaleDateString()} · ${formatCurrency(sales)}"><strong>${formatCurrency(sales)}</strong><div class="sales-bar-wrap"><div class="sales-bar" style="height:${height}%"></div></div><span>${dayLabel}</span></div>`;
+                }).join('');
+
+                const bestSellers = new Map();
+                purchases.forEach((purchase) => {
+                    const current = bestSellers.get(purchase.name) || {
+                        quantity: 0,
+                        total: 0
+                    };
+                    current.quantity += Number(purchase.quantity) || 0;
+                    current.total += purchaseTotal(purchase);
+                    bestSellers.set(purchase.name, current);
+                });
+                const popularItems = [...bestSellers.entries()]
+                    .sort((a, b) => b[1].quantity - a[1].quantity)
+                    .slice(0, 5);
+                $('#popular-items').innerHTML = popularItems.length ?
+                    popularItems.map(([name, stats]) => `<div class="popular-item"><strong>${escapeHtml(name)}</strong><span>${stats.quantity} sold · ${formatCurrency(stats.total)}</span></div>`).join('') :
+                    '<p class="dashboard-empty">Your best sellers will appear here after the first sale.</p>';
+
+                const recentOrders = orders.slice(0, 5);
+                $('#dashboard-recent-orders').innerHTML = recentOrders.map((order) => {
+                    const itemNames = [...new Set(order.items.map((item) => item.name))].join(', ');
+                    const timestamp = new Intl.DateTimeFormat('en', {
+                        dateStyle: 'short',
+                        timeStyle: 'short'
+                    }).format(new Date(order.purchasedAt));
+                    return `<tr><td>${timestamp}</td><td class="item-name">${escapeHtml(order.id.slice(0, 8).toUpperCase())}</td><td>${escapeHtml(itemNames)}</td><td>${order.quantity}</td><td>${formatCurrency(order.total)}</td></tr>`;
+                }).join('');
+                $('#dashboard-orders-empty').hidden = orders.length > 0;
+            }
+
+            function render() {
                 const purchasedUnits = purchases.reduce((sum, purchase) => sum + Number(purchase.quantity || 0), 0);
-                if ($('#purchase-count')) $('#purchase-count').textContent = purchases.length;
+                if ($('#purchase-count')) $('#purchase-count').textContent = groupPurchases(purchases).length;
                 if ($('#purchased-unit-count')) $('#purchased-unit-count').textContent = purchasedUnits;
-                if ($('#dashboard-order-count')) $('#dashboard-order-count').textContent = purchases.length;
                 if ($('#purchase-record-count')) $('#purchase-record-count').textContent = `${purchases.length} record${purchases.length === 1 ? '' : 's'}`;
                 if ($('#sales-revenue')) {
-                    const totalSales = purchases.reduce((sum, purchase) => sum + (Number(purchase.total) || (Number(purchase.unitPrice !== undefined ? purchase.unitPrice : purchase.price) || 0) * Number(purchase.quantity || 0)), 0);
+                    const totalSales = purchases.reduce((sum, purchase) => sum + purchaseTotal(purchase), 0);
                     $('#sales-revenue').textContent = formatCurrency(totalSales);
-                    if ($('#dashboard-sales-total')) $('#dashboard-sales-total').textContent = formatCurrency(totalSales);
                 }
 
                 if ($('#purchase-table')) {
@@ -1642,10 +1977,8 @@
                     updatePosSummary();
                 }
 
-                const rows = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
-                if ($('#inventory-table')) $('#inventory-table').innerHTML = rows;
                 if ($('#management-table')) $('#management-table').innerHTML = inventory.map((item) => `<tr><td class="item-name">${escapeHtml(item.name)}</td><td class="category">${escapeHtml(item.category || 'Uncategorized')}</td><td>${formatCurrency(itemPrice(item))}</td><td>${formatDate(item.updatedAt)}</td><td><button class="row-action" data-edit="${escapeHtml(item.id)}" type="button">Edit</button><button class="row-action delete" data-delete="${escapeHtml(item.id)}" type="button">Delete</button></td></tr>`).join('');
-                if ($('#empty-state')) $('#empty-state').hidden = inventory.length > 0;
+                renderDashboard();
                 renderMenu();
                 renderCart();
             }
@@ -1674,21 +2007,31 @@
                 });
             }
 
-            function requireAdmin(action) {
-                if (sessionStorage.getItem('steel-asia-admin') === 'unlocked') {
-                    action();
-                    return;
-                }
-                pendingAdminAction = action;
+            function syncAdminNavigation() {
+                $$('[data-admin-only]').forEach((element) => {
+                    element.hidden = !isAdminLoggedIn;
+                });
+                $('#admin-toggle').textContent = isAdminLoggedIn ? 'Log out' : 'Admin login';
+                $('#admin-toggle').setAttribute('aria-label', isAdminLoggedIn ? 'Log out of admin account' : 'Log in as admin');
+            }
+
+            function openAdminLogin() {
                 $('#admin-modal').hidden = false;
                 $('#admin-password').value = '';
                 $('#admin-message').textContent = '';
                 $('#admin-password').focus();
             }
 
+            function closeAdminLogin() {
+                $('#admin-modal').hidden = true;
+                $('#admin-password').value = '';
+                pendingAdminAction = null;
+            }
+
             function requestTab(name) {
-                if (name === 'home' || name === 'manage' || name === 'purchases' || name === 'storage') {
-                    requireAdmin(() => showTab(name));
+                if ((name === 'manage' || name === 'purchases') && !isAdminLoggedIn) {
+                    pendingAdminAction = () => showTab(name);
+                    openAdminLogin();
                     return;
                 }
                 showTab(name);
@@ -1706,26 +2049,22 @@
             function editItem(id) {
                 const item = inventory.find((entry) => entry.id === id);
                 if (!item) return;
-                requireAdmin(() => {
-                    showTab('manage');
-                    $('#item-id').value = item.id;
-                    $('#item-name').value = item.name;
-                    $('#item-category').value = item.category;
-                    $('#item-price').value = itemPrice(item);
-                    $('#form-title').textContent = 'Edit menu item';
-                    $('#save-button').textContent = 'Update menu item';
-                    $('#cancel-button').hidden = false;
-                    $('#item-name').focus();
-                });
+                showTab('manage');
+                $('#item-id').value = item.id;
+                $('#item-name').value = item.name;
+                $('#item-category').value = item.category;
+                $('#item-price').value = itemPrice(item);
+                $('#form-title').textContent = 'Edit menu item';
+                $('#save-button').textContent = 'Update menu item';
+                $('#cancel-button').hidden = false;
+                $('#item-name').focus();
             }
 
             function deleteItem(id) {
                 const item = inventory.find((entry) => entry.id === id);
                 if (!item || !window.confirm(`Delete ${item.name}?`)) return;
-                requireAdmin(() => {
-                    inventory = inventory.filter((entry) => entry.id !== id);
-                    saveInventory();
-                });
+                inventory = inventory.filter((entry) => entry.id !== id);
+                saveInventory();
             }
 
             function addToCart(id) {
@@ -1773,26 +2112,71 @@
                     return;
                 }
 
+                const orderId = crypto.randomUUID();
+                const purchasedAt = new Date().toISOString();
                 cart.forEach((entry) => {
                     const item = inventory.find((menuItem) => menuItem.id === entry.id);
                     purchases.unshift({
                         id: crypto.randomUUID(),
+                        orderId,
                         name: item.name,
                         category: item.category,
                         unitPrice: itemPrice(item),
                         total: itemPrice(item) * entry.quantity,
                         quantity: entry.quantity,
-                        purchasedAt: new Date().toISOString()
+                        purchasedAt
                     });
                 });
 
                 savePurchases();
                 cart = [];
                 saveCart();
-                $('#cart-status').textContent = 'Order sent to the admin dashboard.';
+                $('#cart-status').textContent = 'Order recorded successfully.';
             }
 
             $$('[data-tab]').forEach((button) => button.addEventListener('click', () => requestTab(button.dataset.tab)));
+            $('#admin-toggle').addEventListener('click', () => {
+                if (isAdminLoggedIn) {
+                    sessionStorage.removeItem(adminSessionKey);
+                    isAdminLoggedIn = false;
+                    closeAdminLogin();
+                    syncAdminNavigation();
+                    showTab('home');
+                    return;
+                }
+                pendingAdminAction = null;
+                openAdminLogin();
+            });
+            $('#admin-form').addEventListener('submit', (event) => {
+                event.preventDefault();
+                if ($('#admin-password').value !== adminPassword) {
+                    $('#admin-message').textContent = 'Incorrect admin password.';
+                    $('#admin-password').select();
+                    return;
+                }
+                sessionStorage.setItem(adminSessionKey, 'unlocked');
+                isAdminLoggedIn = true;
+                syncAdminNavigation();
+                $('#admin-modal').hidden = true;
+                const action = pendingAdminAction;
+                pendingAdminAction = null;
+                if (action) action();
+            });
+            $('#admin-close').addEventListener('click', closeAdminLogin);
+            $('#admin-cancel').addEventListener('click', closeAdminLogin);
+            $('#admin-modal').addEventListener('click', (event) => {
+                if (event.target === $('#admin-modal')) closeAdminLogin();
+            });
+            $('#export-menu-button').addEventListener('click', downloadMenuBackup);
+            $('#import-menu-button').addEventListener('click', () => $('#import-menu-file').click());
+            $('#import-menu-file').addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) importMenuBackup(file);
+                event.target.value = '';
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !$('#admin-modal').hidden) closeAdminLogin();
+            });
             const posItem = $('#pos-item');
             if (posItem) posItem.addEventListener('change', updatePosSummary);
             const posQuantity = $('#pos-quantity');
@@ -1816,8 +2200,10 @@
                     message.textContent = 'Enter a whole quantity of at least 1.';
                     return;
                 }
+                const orderId = crypto.randomUUID();
                 purchases.unshift({
                     id: crypto.randomUUID(),
+                    orderId,
                     name: item.name,
                     category: item.category,
                     unitPrice: itemPrice(item),
@@ -1867,151 +2253,63 @@
                 if (removeCart) removeCartItem(removeCart.dataset.cartRemove);
             });
 
-            const exportButton = $('#export-button');
-            if (exportButton) exportButton.addEventListener('click', () => {
-                const content = inventory.map((item) => `Item: ${item.name}\nCategory: ${item.category || 'Uncategorized'}\nPrice: ${itemPrice(item)}\nUpdated: ${item.updatedAt}\n---`).join('\n');
-                const blob = new Blob([content || 'No cafe menu records.'], {
-                    type: 'text/plain'
-                });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = 'cozea-cafe-menu.txt';
-                link.click();
-                URL.revokeObjectURL(link.href);
-            });
-
             const exportOrderHistoryButton = $('#export-order-history-button');
             if (exportOrderHistoryButton) exportOrderHistoryButton.addEventListener('click', () => {
-                requireAdmin(() => {
-                    const content = purchases.map((purchase) => {
-                        const unitPrice = Number(purchase.unitPrice !== undefined ? purchase.unitPrice : purchase.price) || 0;
-                        const quantity = Number(purchase.quantity) || 0;
-                        const total = Number(purchase.total) || unitPrice * quantity;
-                        const purchasedAt = new Intl.DateTimeFormat('en', {
-                            dateStyle: 'medium',
-                            timeStyle: 'short'
-                        }).format(new Date(purchase.purchasedAt));
-                        return [
-                            `Date: ${purchasedAt}`,
-                            `Item: ${purchase.name}`,
-                            `Category: ${purchase.category || 'Uncategorized'}`,
-                            `Quantity: ${quantity}`,
-                            `Each: ${formatCurrency(unitPrice)}`,
-                            `Total: ${formatCurrency(total)}`,
-                            '---'
-                        ].join('\n');
-                    }).join('\n');
-                    const totalSales = purchases.reduce((sum, purchase) => {
-                        const unitPrice = Number(purchase.unitPrice !== undefined ? purchase.unitPrice : purchase.price) || 0;
-                        return sum + (Number(purchase.total) || unitPrice * Number(purchase.quantity || 0));
-                    }, 0);
-                    const fileContent = [
-                        'Cozea Cafe Order History',
-                        `Orders: ${purchases.length}`,
-                        `Items sold: ${purchases.reduce((sum, purchase) => sum + Number(purchase.quantity || 0), 0)}`,
-                        `Sales recorded: ${formatCurrency(totalSales)}`,
-                        '',
-                        content || 'No order history.'
+                const content = purchases.map((purchase) => {
+                    const unitPrice = Number(purchase.unitPrice !== undefined ? purchase.unitPrice : purchase.price) || 0;
+                    const quantity = Number(purchase.quantity) || 0;
+                    return [
+                        `Date: ${new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(purchase.purchasedAt))}`,
+                        `Order: ${purchase.orderId || purchase.id}`,
+                        `Item: ${purchase.name}`,
+                        `Category: ${purchase.category || 'Uncategorized'}`,
+                        `Quantity: ${quantity}`,
+                        `Each: ${formatCurrency(unitPrice)}`,
+                        `Total: ${formatCurrency(purchaseTotal(purchase))}`,
+                        '---'
                     ].join('\n');
-                    const blob = new Blob([fileContent], {
-                        type: 'text/plain'
-                    });
-                    const downloadUrl = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = downloadUrl;
-                    link.download = 'cozea-cafe-order-history.txt';
-                    document.body.appendChild(link);
-                    link.click();
-                    link.remove();
-                    window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
-                    $('#order-history-message').textContent = 'Order history saved as a text file.';
+                }).join('\n');
+                const fileContent = [
+                    'Cozea Cafe Order History',
+                    `Orders: ${groupPurchases(purchases).length}`,
+                    `Items sold: ${purchases.reduce((sum, purchase) => sum + Number(purchase.quantity || 0), 0)}`,
+                    `Sales recorded: ${formatCurrency(purchases.reduce((sum, purchase) => sum + purchaseTotal(purchase), 0))}`,
+                    '',
+                    content || 'No order history.'
+                ].join('\n');
+                const blob = new Blob([fileContent], {
+                    type: 'text/plain'
                 });
+                const downloadUrl = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = 'cozea-cafe-order-history.txt';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+                $('#order-history-message').textContent = 'Order history saved as a text file.';
             });
 
             const clearOrderHistoryButton = $('#clear-order-history-button');
             if (clearOrderHistoryButton) clearOrderHistoryButton.addEventListener('click', () => {
-                requireAdmin(() => {
-                    if (!purchases.length) {
-                        $('#order-history-message').textContent = 'There is no order history to clear.';
-                        return;
-                    }
-                    if (!window.confirm('Clear all order history? This cannot be undone.')) return;
-                    purchases = [];
-                    savePurchases();
-                    render();
-                    $('#order-history-message').textContent = 'Order history cleared.';
-                });
-            });
-
-            const importFile = $('#import-file');
-            if (importFile) importFile.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const imported = String(reader.result).split('\n---').map((block) => {
-                        const lines = block.split('\n');
-                        const nameLine = lines.find((line) => line.startsWith('Item: '));
-                        const categoryLine = lines.find((line) => line.startsWith('Category: '));
-                        const priceLine = lines.find((line) => line.startsWith('Price: '));
-                        const name = nameLine ? nameLine.slice(6).trim() : '';
-                        const category = categoryLine ? categoryLine.slice(10).trim() : '';
-                        const price = Number(priceLine ? priceLine.slice(7) : 0);
-                        return name && Number.isFinite(price) && price >= 0 ? {
-                            id: crypto.randomUUID(),
-                            name,
-                            category,
-                            price,
-                            updatedAt: new Date().toISOString()
-                        } : null;
-                    }).filter(Boolean);
-                    if (!imported.length) {
-                        $('#storage-message').textContent = 'No valid records found.';
-                        return;
-                    }
-                    inventory = imported;
-                    saveInventory();
-                    $('#storage-message').textContent = `${imported.length} record${imported.length === 1 ? '' : 's'} imported.`;
-                };
-                reader.readAsText(file);
-            });
-
-            const clearButton = $('#clear-button');
-            if (clearButton) clearButton.addEventListener('click', () => {
-                if (inventory.length && window.confirm('Clear all menu items?')) {
-                    inventory = [];
-                    saveInventory();
-                }
-            });
-
-            const adminForm = $('#admin-form');
-            if (adminForm) adminForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                if ($('#admin-password').value !== adminPassword) {
-                    $('#admin-message').textContent = 'Incorrect admin password.';
-                    $('#admin-password').select();
+                if (!purchases.length) {
+                    $('#order-history-message').textContent = 'There is no order history to clear.';
                     return;
                 }
-                sessionStorage.setItem('steel-asia-admin', 'unlocked');
-                $('#admin-modal').hidden = true;
-                const action = pendingAdminAction;
-                pendingAdminAction = null;
-                if (action) action();
+                if (!window.confirm('Clear all order history? This cannot be undone.')) return;
+                purchases = [];
+                savePurchases();
+                $('#order-history-message').textContent = 'Order history cleared.';
             });
-
-            const closeAdmin = () => {
-                $('#admin-modal').hidden = true;
-                pendingAdminAction = null;
-            };
-            if ($('#admin-close')) $('#admin-close').addEventListener('click', closeAdmin);
-            if ($('#admin-cancel')) $('#admin-cancel').addEventListener('click', closeAdmin);
             if ($('#today')) $('#today').textContent = new Intl.DateTimeFormat('en', {
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric'
             }).format(new Date());
 
-            showTab('menu');
+            syncAdminNavigation();
+            showTab('home');
             render();
         })();
     </script>
